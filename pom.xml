@@ -68,7 +68,7 @@
 			<id>dev</id>
 			<properties>
 				<packaging.type>war</packaging.type>
-				<maven.test.skip>true</maven.test.skip>
+				<maven.test.skip>false</maven.test.skip>
 				<activeProfile>dev</activeProfile>
 			</properties>
 			<dependencies>
@@ -79,7 +79,7 @@
 				</dependency>
 			</dependencies>
 			<activation>
-			<activeByDefault>true</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 				<property>
 					<name>environment</name>
 					<value>dev</value>
