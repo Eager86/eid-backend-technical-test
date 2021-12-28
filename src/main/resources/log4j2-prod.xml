@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_PATTERN">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} --- [%15.15t] %-40.40c{1.} : %m%n%ex
+        </Property>
+        <Property name="APP_LOG_ROOT">/opt/tomcat</Property>
+    </Properties>
+    <Appenders>
+        <!-- Rolling File Appender -->
+        <RollingFile name="FileAppender" filePattern="${APP_LOG_ROOT}/logs/appNoaBackUsers-%d{yyyy-MM-dd}-%i.log"  >
+             <FileName>${APP_LOG_ROOT}/logs/appNoaBackUsers.log</FileName>         
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" />
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+    	<Logger level="WARN"  name="org.springframework.web.filter.CommonsRequestLoggingFilter"/>
+    	<Logger level="INFO"  name="com.noa.users"/>
+    	<Logger level="ERROR"  name="com.noa.users.service"/>
+        <Root level="ERROR">
+            <AppenderRef ref="FileAppender" />
+        </Root>
+    </Loggers>
+</Configuration>

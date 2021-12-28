@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+	<Properties>
+		<Property name="PATTER_DEBUG"
+			value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} --- [%15.15t] %-40.40c{1.} : %m%n%ex" />
+		<Property name="PATTER_CONSOLE"
+			value="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg\n" />
+		<Property name="APP_LOG_ROOT" value="/opt/tomcat" />
+	</Properties>
+	<Appenders>
+
+		<!-- APPENDER CONSOLE -->
+		<Console name="STDOUT" target="SYSTEM_OUT">
+			<PatternLayout pattern="${PATTER_CONSOLE}" />
+		</Console>
+
+		<!-- APPENDER DEBUG -->
+		<RollingFile name="APPENDER_DEBUG"
+			filePattern="${APP_LOG_ROOT}/logs/appNoaBackUsers-%d{yyyy-MM-dd}-%i.log">
+			<FileName>${APP_LOG_ROOT}/logs/appNoaBackUsers.log</FileName>
+			<PatternLayout pattern="${PATTER_DEBUG}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+				<SizeBasedTriggeringPolicy size="5MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="10" />
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="com.zaxxer.hikari" level="ERROR"/>
+		<Logger name="org.springframework" level="ERROR"/>
+		<Logger name="springfox.documentation" level="ERROR"/>
+		<Root level="DEBUG">
+			<AppenderRef ref="APPENDER_DEBUG" />
+			<AppenderRef ref="STDOUT" />
+		</Root>
+	</Loggers>
+</Configuration>
