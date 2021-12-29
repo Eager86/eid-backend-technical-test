@@ -19,56 +19,59 @@ import com.test.eid.services.TemperatureService;
 class EidApplicationTests {
 
 	@MockBean
-	TemperatureReadingsDto temperatureReadingsDto;
+	private TemperatureReadingsDto temperatureReadingsDto;
 
 	@Autowired
-	TemperatureService service;
+	private TemperatureService service;
 
 	@Test
-	void EideMaximunIncreseTest() {
-		int regarding[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	void EidMaximunIncreseTest() {
+		final int regarding[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 		when(temperatureReadingsDto.getReadings()).thenReturn(regarding);
 
-		ResultMaximumIncreaseDto resultMaximumIncreaseDto = service
+		final ResultMaximumIncreaseDto resultMaximumIncreaseDto = service
 				.maximumIncrease(temperatureReadingsDto.getReadings());
 
-		assertEquals(9, resultMaximumIncreaseDto.getMaximumIncrease());
+		final int expectedResult= 9;
+		assertEquals(expectedResult, resultMaximumIncreaseDto.getMaximumIncrease());
 
 		verify(temperatureReadingsDto).getReadings();
 	}
 
 	@Test
-	void EideMaximunIncreseMultipleCallTest() {
-		int regarding[] = { 60, 1, 4, 8, 100 };
-		when(temperatureReadingsDto.getReadings()).thenReturn(regarding);
+	void EidMaximunIncreseMultipleCallTest() {
+		final int regardingCallOne[] = { 60, 1, 4, 8, 100 };
+		when(temperatureReadingsDto.getReadings()).thenReturn(regardingCallOne);
 
 		ResultMaximumIncreaseDto resultMaximumIncreaseDto = service
 				.maximumIncrease(temperatureReadingsDto.getReadings());
 
-		assertEquals(99, resultMaximumIncreaseDto.getMaximumIncrease());
+		final int expectedResultCallOne = 99;
+		assertEquals(expectedResultCallOne, resultMaximumIncreaseDto.getMaximumIncrease());
 
-		int regarding2[] = { 10, 15, 18, 1, 8 };
-		when(temperatureReadingsDto.getReadings()).thenReturn(regarding2);
+		final int regardingTestTwo[] = { 10, 15, 18, 1, 8 };
+		when(temperatureReadingsDto.getReadings()).thenReturn(regardingTestTwo);
 
 		resultMaximumIncreaseDto = service.maximumIncrease(temperatureReadingsDto.getReadings());
 
-		assertEquals(8, resultMaximumIncreaseDto.getMaximumIncrease());
+		final int expectedResultCallTwo = 8;
+		assertEquals(expectedResultCallTwo, resultMaximumIncreaseDto.getMaximumIncrease());
 
 		verify(temperatureReadingsDto, times(2)).getReadings();
 	}
 
 	@Test
-	void EideMaximunIncreseSameResultTest() {
-		int regarding[] = { 60, 1, 4, 8, 100 };
+	void EidMaximunIncreseSameResultTest() {
+		final int regarding[] = { 60, 1, 4, 8, 100 };
 		when(temperatureReadingsDto.getReadings()).thenReturn(regarding);
 
-		ResultMaximumIncreaseDto resultMaximumIncreaseDto1 = service
+		final ResultMaximumIncreaseDto resultMaximumIncreaseDtoOne = service
 				.maximumIncrease(temperatureReadingsDto.getReadings());
 
-		ResultMaximumIncreaseDto resultMaximumIncreaseDto2 = service
+		final ResultMaximumIncreaseDto resultMaximumIncreaseDtoTwo = service
 				.maximumIncrease(temperatureReadingsDto.getReadings());
 
-		assertSame(resultMaximumIncreaseDto1.getMaximumIncrease(), resultMaximumIncreaseDto2.getMaximumIncrease());
+		assertSame(resultMaximumIncreaseDtoOne.getMaximumIncrease(), resultMaximumIncreaseDtoTwo.getMaximumIncrease());
 
 		verify(temperatureReadingsDto, times(2)).getReadings();
 	}

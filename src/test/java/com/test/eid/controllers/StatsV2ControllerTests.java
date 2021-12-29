@@ -26,9 +26,9 @@ public class StatsV2ControllerTests {
 	private MockMvc mvc;
 
 	@MockBean
-	TemperatureServiceImpl service;
+	private TemperatureServiceImpl service;
 
-	ObjectMapper objectMapper;
+	private ObjectMapper objectMapper;
 
 	@BeforeEach
 	void setUp() {
@@ -36,10 +36,11 @@ public class StatsV2ControllerTests {
 	}
 
 	@Test
-	public void detalle() throws Exception {
+	public void StatsComputePostTest() throws Exception {
 		// Given
-		ResultMaximumIncreaseDto result = new ResultMaximumIncreaseDto(9);
-		TemperatureReadingsDto dto = new TemperatureReadingsDto();
+		final int maximumIncrease = 8;
+		final ResultMaximumIncreaseDto result = new ResultMaximumIncreaseDto(maximumIncrease);
+		final TemperatureReadingsDto dto = new TemperatureReadingsDto();
 		dto.setReadings(new int[] { 10, 15, 18, 1, 8 });
 
 		// When
