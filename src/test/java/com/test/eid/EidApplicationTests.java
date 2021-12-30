@@ -32,12 +32,40 @@ class EidApplicationTests {
 		final ResultMaximumIncreaseDto resultMaximumIncreaseDto = service
 				.maximumIncrease(temperatureReadingsDto.getReadings());
 
-		final int expectedResult= 9;
+		final int expectedResult = 9;
 		assertEquals(expectedResult, resultMaximumIncreaseDto.getMaximumIncrease());
 
 		verify(temperatureReadingsDto).getReadings();
 	}
 
+	@Test
+	void EidMaximunIncreseNegativeTest() {
+		final int regarding[] = { 3, 2, 1 };
+		when(temperatureReadingsDto.getReadings()).thenReturn(regarding);
+
+		final ResultMaximumIncreaseDto resultMaximumIncreaseDto = service
+				.maximumIncrease(temperatureReadingsDto.getReadings());
+
+		final int expectedResult = 0;
+		assertEquals(expectedResult, resultMaximumIncreaseDto.getMaximumIncrease());
+
+		verify(temperatureReadingsDto).getReadings();
+	}
+	
+	@Test
+	void EidMaximunIncreseWithReadingsTest() {
+		final int regarding[] = {};
+		when(temperatureReadingsDto.getReadings()).thenReturn(regarding);
+
+		final ResultMaximumIncreaseDto resultMaximumIncreaseDto = service
+				.maximumIncrease(temperatureReadingsDto.getReadings());
+
+		final int expectedResult = 0;
+		assertEquals(expectedResult, resultMaximumIncreaseDto.getMaximumIncrease());
+
+		verify(temperatureReadingsDto).getReadings();
+	}
+	
 	@Test
 	void EidMaximunIncreseMultipleCallTest() {
 		final int regardingCallOne[] = { 60, 1, 4, 8, 100 };
